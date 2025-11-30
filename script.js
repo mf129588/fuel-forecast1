@@ -38,6 +38,7 @@ fuelForm.addEventListener('submit', (e) => {
     
     const distance = parseFloat(document.getElementById('distance').value);
     const consumption = parseFloat(document.getElementById('consumption').value);
+    const reserve = parseFloat(document.getElementById('reserve').value) || 0;
     
     let fuelLevel;
     const selectedOption = document.querySelector('input[name="fuelOption"]:checked').value;
@@ -50,12 +51,13 @@ fuelForm.addEventListener('submit', (e) => {
         fuelLevel = (tankCapacity * fuelPercentage) / 100;
     }
     
+    const usableFuel = fuelLevel - reserve;
     const fuelNeeded = (distance / 100) * consumption;
     
     calculatorPage.classList.remove('active');
     resultPage.classList.add('active');
     
-    if (fuelLevel >= fuelNeeded) {
+    if (usableFuel >= fuelNeeded) {
         resultPage.classList.add('success');
         resultPage.classList.remove('failure');
         resultMessage.textContent = 'You will make it!';
@@ -64,7 +66,7 @@ fuelForm.addEventListener('submit', (e) => {
         resultPage.classList.add('failure');
         resultPage.classList.remove('success');
         resultMessage.textContent = 'You will stand in the middle of nowhere';
-        const maxDist = (fuelLevel / consumption) * 100;
+        const maxDist = (usableFuel / consumption) * 100;
         maxDistance.textContent = `Maximum distance you can travel: ${maxDist.toFixed(1)} km`;
         maxDistance.style.display = 'block';
     }
