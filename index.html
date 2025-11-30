@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Calculate if you have enough fuel to reach your destination">
+    <title>Fuel Forecast</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Fuel Forecast">
+</head>
+<body>
+    <div id="startPage" class="page active">
+        <h1>Fuel Forecast</h1>
+        <button id="startBtn" class="btn">START</button>
+    </div>
+
+    <div id="calculatorPage" class="page">
+        <h2>Enter Your Details</h2>
+        <form id="fuelForm">
+            <div class="input-group">
+                <label for="distance">Distance (km)</label>
+                <input type="number" id="distance" required min="0" step="0.1">
+            </div>
+            <div class="input-group">
+                <label for="consumption">Average burning (l/100km)</label>
+                <input type="number" id="consumption" required min="0" step="0.1">
+            </div>
+            <div class="fuel-option-toggle">
+                <label>
+                    <input type="radio" name="fuelOption" value="liters" checked>
+                    I know liters
+                </label>
+                <label>
+                    <input type="radio" name="fuelOption" value="percentage">
+                    I know percentage
+                </label>
+            </div>
+            
+            <div id="litersOption" class="fuel-input-option">
+                <div class="input-group">
+                    <label for="fuelLevel">Fuel level in tank (l)</label>
+                    <input type="number" id="fuelLevel" min="0" step="0.1">
+                </div>
+            </div>
+            
+            <div id="percentageOption" class="fuel-input-option" style="display: none;">
+                <div class="input-group">
+                    <label for="tankCapacity">Tank capacity (l)</label>
+                    <input type="number" id="tankCapacity" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="fuelPercentage">Fuel level (%)</label>
+                    <input type="number" id="fuelPercentage" min="0" max="100" step="1">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">Calculate</button>
+        </form>
+    </div>
+
+    <div id="resultPage" class="page">
+        <h1 id="resultMessage"></h1>
+        <p id="maxDistance"></p>
+        <button id="resetBtn" class="btn">Make again</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js');
+        }
+    </script>
+</body>
+</html>
